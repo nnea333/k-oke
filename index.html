@@ -630,8 +630,16 @@ const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbwCKO5MQoICoVm-UdP
     const cancelCategoryEditButton = document.querySelector("#cancelCategoryEditButton");
 
     // 💡 修正：完全拔除原本的 Google Script 判斷，100% 強制使用真實 Fetch 請求
+    // ⭕️ 修正後的寫法：改用 POST 發送 action，完美相容後端 gs
     async function apiGetData() {
-      return fetch(`${API_BASE_URL}?action=/api/bootstrap`, { headers: { Accept: "application/json" } }).then(parseApiResponse);
+      return fetch(`${API_BASE_URL}`, { 
+        method: "POST", 
+        headers: { 
+          "Accept": "application/json",
+          "Content-Type": "application/json" 
+        }, 
+        body: JSON.stringify({ action: "/api/bootstrap" }) 
+      }).then(parseApiResponse);
     }
     async function apiPost(path, payload) {
       return fetch(`${API_BASE_URL}${path}`, { method: "POST", headers: { Accept: "application/json", "Content-Type": "application/json" }, body: JSON.stringify(payload) }).then(parseApiResponse);
