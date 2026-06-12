@@ -554,8 +554,8 @@
 
   <script>
     // 💡 核心修正：定義你的獨立後端真實網址
-    // 如果你在本機測試，可以設定成 'http://localhost:3000' 之類的路徑/0156
-const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbwCKO5MQoICoVm-UdPMj6HLS9C3HrtgrcEtD31jtI4Bpd_5PlINJP-gm9mhQB9BLlCkKQ/exec';
+    // 如果你在本機測試，可以設定成 'http://localhost:3000' 之類的路徑/0215
+const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbypsB-CQFVUR2NY8rjFU1ag57NMZMVwO86KsnDABO-8O5NEpUqItxkze1AwU1wTdeRvdA/exec';
 
     const state = {
       records: [],
@@ -631,21 +631,38 @@ const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbwCKO5MQoICoVm-UdP
 
     // 💡 修正：完全拔除原本的 Google Script 判斷，100% 強制使用真實 Fetch 請求
     // ⭕️ 修正後的寫法：改用 POST 發送 action，完美相容後端 gs
+    // 💡 修正後的 apiGetData：改用 text/plain 繞過嚴格的 CORS 預檢
     async function apiGetData() {
-      return fetch(`${API_BASE_URL}`, { 
-        method: "POST", 
-        headers: { 
-          "Accept": "application/json",
-          "Content-Type": "application/json" 
-        }, 
-        body: JSON.stringify({ action: "/api/bootstrap" }) 
+      return fetch(`${API_BASE_URL}`, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8" // 用這個可以避開瀏覽器刁難
+        },
+        body: JSON.stringify({ action: "/api/bootstrap" })
       }).then(parseApiResponse);
     }
-    async function apiPost(path, payload) {
-      return fetch(`${API_BASE_URL}${path}`, { method: "POST", headers: { Accept: "application/json", "Content-Type": "application/json" }, body: JSON.stringify(payload) }).then(parseApiResponse);
+
+    async function apiPost(path, body) {
+      return fetch(`${API_BASE_URL}`, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({ ...body, action: path }) // 把路由放進 body
+      }).then(parseApiResponse);
     }
-    async function apiPut(path, payload) {
-      return fetch(`${API_BASE_URL}${path}`, { method: "PUT", headers: { Accept: "application/json", "Content-Type": "application/json" }, body: JSON.stringify(payload) }).then(parseApiResponse);
+
+    async function apiPut(path, body) {
+      return fetch(`${API_BASE_URL}`, {
+        method: "POST", // 💡 GAS 不支援真實的 PUT，一律用 POST 取代
+        mode: "cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({ ...body, action: path })
+      }).then(parseApiResponse);
     }
     async function parseApiResponse(response) {
       const payload = await response.json().catch(() => ({}));
