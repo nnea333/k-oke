@@ -631,7 +631,7 @@ const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbyM7KPNb-RRMGnyFPF
 
     // 💡 修正：完全拔除原本的 Google Script 判斷，100% 強制使用真實 Fetch 請求
     async function apiGetData() {
-      return fetch(`${API_BASE_URL}/api/bootstrap`, { headers: { Accept: "application/json" } }).then(parseApiResponse);
+      return fetch(`${API_BASE_URL}?action=/api/bootstrap`, { headers: { Accept: "application/json" } }).then(parseApiResponse);
     }
     async function apiPost(path, payload) {
       return fetch(`${API_BASE_URL}${path}`, { method: "POST", headers: { Accept: "application/json", "Content-Type": "application/json" }, body: JSON.stringify(payload) }).then(parseApiResponse);
