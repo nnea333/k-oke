@@ -5,30 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>記帳 APP (獨立後端版)</title>
   <style>
-    /* ==========================================
-       🎨 核心顏色與主題配置 (方便未來更換顏色)
-       ========================================== */
     :root {
-      --ink: #202632;          /* 主要文字、深色背景 */
-      --muted: #687386;        /* 次要、提示文字 */
-      --line: #dbe3ee;         /* 邊框線條、分割線 */
-      --wash: #f5f7fb;         /* 大面積底色、淺色区块 */
-      --white: #ffffff;        /* 純白卡片背景 */
-      
-      /* 功能與狀態顏色 */
-      --blue: #3466d6;         /* 主要按鈕、主題藍 */
-      --blue-hover: #2552b4;   /* 按鈕滑過深藍 */
-      --green: #1f9d78;        /* 成功狀態、數字綠 */
-      --red: #d94b45;          /* 刪除、警告、數字紅 */
-      --red-hover: #b83732;    /* 刪除按鈕滑過深紅 */
-      --amber: #c98213;        /* 警告、提醒黃 */
-
-      /* 記帳類型專用色 */
-      --income: #2563eb;       /* 收入顏色 */
-      --expense: #d94b45;      /* 支出顏色 */
+      --ink: #202632;
+      --muted: #687386;
+      --line: #dbe3ee;
+      --wash: #f5f7fb;
+      --green: #1f9d78;
+      --red: #d94b45;
+      --blue: #3466d6;
+      --income: #2563eb;
+      --expense: #d94b45;
+      --amber: #c98213;
     }
 
     * { box-sizing: border-box; }
+
     html { font-size: 16px; }
 
     body {
@@ -51,21 +42,21 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem;
-      background: var(--white);
+      background: #ffffff;
       padding: 1rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.03);
     }
 
     h1 { font-size: 1.25rem; margin: 0; font-weight: 700; color: var(--ink); }
+
     .status-badge { font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 20px; font-weight: 500; }
     .status-loading { background: #fef3c7; color: var(--amber); }
     .status-success { background: #d1fae5; color: var(--green); }
     .status-error { background: #fee2e2; color: var(--red); }
 
-    /* 卡片設計 */
     .card {
-      background: var(--white);
+      background: #ffffff;
       border-radius: 12px;
       padding: 1.25rem;
       margin-bottom: 1rem;
@@ -74,7 +65,6 @@
     }
     .card-title { font-size: 0.9rem; font-weight: 600; color: var(--muted); margin-top: 0; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
 
-    /* 表單與輸入框 */
     .form-group { margin-bottom: 1rem; }
     .form-group label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.35rem; color: var(--ink); }
     .form-control {
@@ -87,11 +77,10 @@
       color: var(--ink);
       transition: all 0.2s;
     }
-    .form-control:focus { outline: none; border-color: var(--blue); background: var(--white); box-shadow: 0 0 0 3px rgba(52, 102, 214, 0.1); }
+    .form-control:focus { outline: none; border-color: var(--blue); background: #ffffff; box-shadow: 0 0 0 3px rgba(52, 102, 214, 0.1); }
     
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
-    /* 按鈕樣式 */
     .btn {
       width: 100%;
       padding: 0.75rem;
@@ -106,21 +95,16 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .btn-primary { background: var(--blue); color: var(--white); }
-    .btn-primary:hover { background: var(--blue-hover); }
-    .btn-danger { background: var(--red); color: var(--white); }
-    .btn-danger:hover { background: var(--red-hover); }
+    .btn-primary { background: var(--blue); color: #ffffff; }
+    .btn-primary:hover { background: #2552b4; }
     .btn-secondary { background: var(--line); color: var(--ink); }
-    .btn-secondary:hover { background: #cbd5e1; }
 
-    /* 類型選擇器 (切換按鈕) */
     .type-selector { display: flex; background: var(--wash); padding: 0.25rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--line); }
     .type-btn { flex: 1; text-align: center; padding: 0.5rem; font-size: 0.9rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s; color: var(--muted); }
-    .type-btn.active[data-type="支出"] { background: var(--expense); color: var(--white); }
-    .type-btn.active[data-type="收入"] { background: var(--income); color: var(--white); }
-    .type-btn.active[data-type="轉帳"] { background: var(--ink); color: var(--white); }
+    .type-btn.active[data-type="支出"] { background: var(--expense); color: #ffffff; }
+    .type-btn.active[data-type="收入"] { background: var(--income); color: #ffffff; }
+    .type-btn.active[data-type="轉帳"] { background: var(--ink); color: #ffffff; }
 
-    /* 列表與摘要項目 */
     .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; text-align: center; }
     .summary-val { font-size: 1.1rem; font-weight: 700; margin-top: 0.25rem; }
     .text-green { color: var(--green); }
@@ -131,7 +115,6 @@
     .item-main { font-weight: 500; }
     .item-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; }
 
-    /* 歷史紀錄特殊卡片樣式 */
     .record-card {
       display: flex;
       justify-content: space-between;
@@ -151,14 +134,13 @@
 
     .hidden { display: none !important; }
     
-    /* 吐司彈窗 */
     #toast {
       position: fixed;
       bottom: 2rem;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
       background: var(--ink);
-      color: var(--white);
+      color: #ffffff;
       padding: 0.6rem 1.2rem;
       border-radius: 30px;
       font-size: 0.85rem;
@@ -246,26 +228,29 @@
         <div class="form-group" style="margin-top: 1.5rem;">
           <button type="submit" id="submitBtn" class="btn btn-primary">儲存項目</button>
         </div>
-        <div class="grid-2 hidden" id="editActionsRow">
-          <button type="button" id="cancelEditBtn" class="btn btn-secondary">取消取消</button>
-          <button type="button" id="deleteRecordBtn" class="btn btn-danger">🗑️ 刪除此筆</button>
+        <div class="form-group hidden" id="cancelEditRow">
+          <button type="button" id="cancelEditBtn" class="btn btn-secondary">取消編輯</button>
         </div>
       </form>
     </div>
 
     <div class="card">
-      <div class="card-title">🎯 固定預算設定</div>
-      <div class="grid-2" style="align-items: flex-end; margin-bottom: 1rem;">
-        <div class="form-group" style="margin-bottom:0;">
+      <div class="card-title">🎯 預算設定</div>
+      <div class="grid-2" style="margin-bottom: 1rem;">
+        <div class="form-group">
+          <label>選擇月份</label>
+          <input type="month" id="budgetMonthInput" class="form-control">
+        </div>
+        <div class="form-group">
           <label>選擇支出類別</label>
           <select id="budgetCategorySelect" class="form-control"></select>
         </div>
-        <div class="form-group" style="margin-bottom:0;">
-          <label>固定預算金額</label>
-          <input type="number" id="budgetAmountInput" class="form-control" placeholder="0">
-        </div>
       </div>
-      <button type="button" id="saveBudgetBtn" class="btn btn-primary">儲存固定預算</button>
+      <div class="form-group">
+        <label>預算金額</label>
+        <input type="number" id="budgetAmountInput" class="form-control" placeholder="0">
+      </div>
+      <button type="button" id="saveBudgetBtn" class="btn btn-primary">儲存預算設定</button>
 
       <div style="margin-top: 1.5rem;" id="budgetStatusList"></div>
     </div>
@@ -276,7 +261,7 @@
     </div>
 
     <div class="card">
-      <div class="card-title">🕒 歷史明細 (點選可編輯/刪除)</div>
+      <div class="card-title">🕒 歷史明細</div>
       <div id="historyList"></div>
     </div>
   </div>
@@ -284,10 +269,9 @@
   <div id="toast">提示訊息</div>
 
   <script>
-    // 💡 串接後端專用網址 (請保持以 /exec 結尾，勿多加斜線)
-    const API_BASE_URL = "https://script.google.com/macros/s/AKfycbxRao0ASsh8WLLJ0LzWVQ-bKVtL4MSxFRqw--aNTeTvatYpqab8ozadENcqve4trdIRDw/exec";
+    // 💡 串接後端專用網址
+    const API_BASE_URL = "https://script.google.com/macros/s/AKfycbwCKO5MQoICoVm-UdPMj6HLS9C3HrtgrcEtD31jtI4Bpd_5PlINJP-gm9mhQB9BLlCkKQ/exec";
 
-    // 核心狀態管理
     let state = {
       records: [],
       categories: [],
@@ -297,14 +281,12 @@
       editingRecordId: null
     };
 
-    // DOM 元素綁定
     const statusBadge = document.getElementById("statusBadge");
     const recordForm = document.getElementById("recordForm");
     const formTitle = document.getElementById("formTitle");
     const submitBtn = document.getElementById("submitBtn");
-    const editActionsRow = document.getElementById("editActionsRow");
+    const cancelEditRow = document.getElementById("cancelEditRow");
     const cancelEditBtn = document.getElementById("cancelEditBtn");
-    const deleteRecordBtn = document.getElementById("deleteRecordBtn");
 
     const dateInput = document.getElementById("dateInput");
     const nameInput = document.getElementById("nameInput");
@@ -320,6 +302,7 @@
     const transferRow = document.getElementById("transferRow");
     const accountLabel = document.getElementById("accountLabel");
 
+    const budgetMonthInput = document.getElementById("budgetMonthInput");
     const budgetCategorySelect = document.getElementById("budgetCategorySelect");
     const budgetAmountInput = document.getElementById("budgetAmountInput");
     const saveBudgetBtn = document.getElementById("saveBudgetBtn");
@@ -332,7 +315,6 @@
     const historyList = document.getElementById("historyList");
     const toast = document.getElementById("toast");
 
-    // 相容性高、不經預檢的 text/plain 請求發送器
     async function apiRequest(actionPath, payload = {}) {
       setStatus("處理中...", "loading");
       try {
@@ -364,7 +346,6 @@
       setTimeout(() => toast.classList.remove("show"), 2500);
     }
 
-    // 介面渲染核心流程
     function renderApp(data) {
       if (!data) return;
       state.records = data.records || [];
@@ -372,7 +353,6 @@
       state.accounts = data.accounts || [];
       state.budgets = data.budgets || [];
 
-      // 計算本月快報統計
       const curMonth = new Date().toISOString().slice(0, 7);
       let inc = 0, exp = 0;
       state.records.forEach(r => {
@@ -384,14 +364,12 @@
       totalIncome.textContent = `$${inc.toLocaleString()}`;
       totalExpense.textContent = `$${exp.toLocaleString()}`;
       
-      // 計算淨資產
       let totalAsset = 0;
       if (data.accountSummary) {
         data.accountSummary.forEach(a => totalAsset += Number(a.balance || 0));
       }
       netAsset.textContent = `$${totalAsset.toLocaleString()}`;
 
-      // 渲染資產帳戶現況
       accountList.innerHTML = (data.accountSummary || []).map(a => `
         <div class="list-item">
           <div class="item-main">${a.accountSource}</div>
@@ -399,13 +377,12 @@
         </div>
       `).join("");
 
-      // 渲染固定預算狀態
       budgetStatusList.innerHTML = (data.budgetSummary || []).map(b => {
         const percent = Math.min(b.usagePercent || 0, 100);
         return `
           <div style="margin-bottom:0.75rem;">
             <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
-              <div class="item-main">${b.mainCategory} (預算 $${b.budgetAmount.toLocaleString()})</div>
+              <div class="item-main">[${b.month}] ${b.mainCategory} (預算 $${b.budgetAmount.toLocaleString()})</div>
               <div class="${b.isOver ? 'text-red':'text-green'}" style="font-weight:600;">已花 $${b.usedAmount.toLocaleString()}</div>
             </div>
             <div style="background:var(--wash); height:6px; border-radius:10px; overflow:hidden;">
@@ -415,22 +392,17 @@
         `;
       }).join("");
 
-      // 更新表單選項
       updateFormSelects();
-      // 渲染歷史清單
       renderHistory();
     }
 
     function updateFormSelects() {
-      // 過濾出對應型態的主類別
       const mainCats = [...new Set(state.categories.filter(c => c.type === state.currentType).map(c => c.mainCategory))];
       mainCategorySelect.innerHTML = mainCats.map(c => `<option value="${c}">${c}</option>`).join("");
       
-      // 預算設定下拉選單 (一律綁定所有支出的主類別)
       const expCats = [...new Set(state.categories.filter(c => c.type === "支出").map(c => c.mainCategory))];
       budgetCategorySelect.innerHTML = expCats.map(c => `<option value="${c}">${c}</option>`).join("");
 
-      // 帳戶來源清單
       const accs = state.accounts.map(a => a.accountSource);
       accountSourceSelect.innerHTML = accs.map(a => `<option value="${a}">${a}</option>`).join("");
       transferAccountSelect.innerHTML = accs.map(a => `<option value="${a}">${a}</option>`).join("");
@@ -464,32 +436,26 @@
       `).join("");
     }
 
-    // 進入歷史明細的編輯/刪除狀態
     window.startEditRecord = function(id) {
       const r = state.records.find(item => item.recordId === id);
       if (!r) return;
       
       state.editingRecordId = id;
-      formTitle.textContent = "✏️ 修改/刪除既有項目";
+      formTitle.textContent = "✏️ 修改既有項目";
       submitBtn.textContent = "確認修改項目";
-      submitBtn.classList.remove("btn-primary");
-      submitBtn.classList.add("btn-primary");
-      editActionsRow.classList.remove("hidden");
+      cancelEditRow.classList.remove("hidden");
 
-      // 切換記帳形態按鈕
       state.currentType = r.type;
       document.querySelectorAll(".type-btn").forEach(b => {
         b.classList.toggle("active", b.dataset.type === r.type);
       });
 
-      // 填入既有數據
       dateInput.value = r.date;
       nameInput.value = r.name;
       amountInput.value = r.amount;
       actualAmountInput.value = r.actualAmount || "";
       noteInput.value = r.note || "";
 
-      // 動態更新下拉選單後再賦值
       updateFormSelects();
       if (r.type !== "轉帳") {
         mainCategorySelect.value = r.mainCategory;
@@ -514,15 +480,14 @@
       state.editingRecordId = null;
       formTitle.textContent = "新增項目";
       submitBtn.textContent = "儲存項目";
-      editActionsRow.classList.add("hidden");
+      cancelEditRow.classList.add("hidden");
       recordForm.reset();
       dateInput.value = new Date().toISOString().slice(0, 10);
     }
 
-    // 監聽記帳形態切換
     document.querySelectorAll(".type-btn").forEach(btn => {
       btn.addEventListener("click", (e) => {
-        if(state.editingRecordId) return; // 編輯中不開放切換型態
+        if(state.editingRecordId) return;
         document.querySelectorAll(".type-btn").forEach(b => b.classList.remove("active"));
         e.target.classList.add("active");
         state.currentType = e.target.dataset.type;
@@ -543,18 +508,6 @@
     mainCategorySelect.addEventListener("change", triggerSubCategory);
     cancelEditBtn.addEventListener("click", resetForm);
 
-    // ⭕️ 監聽刪除此筆項目按鈕
-    deleteRecordBtn.addEventListener("click", async () => {
-      if (!state.editingRecordId) return;
-      if (!confirm("⚠️ 你確定要刪除這筆記帳紀錄嗎？此動作將無法復原。")) return;
-      
-      const res = await apiRequest("deleteRecord", { recordId: state.editingRecordId });
-      showToast("项目已成功刪除！");
-      resetForm();
-      renderApp(res);
-    });
-
-    // 儲存表單 (新增或修改)
     recordForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const payload = {
@@ -578,21 +531,21 @@
       renderApp(res);
     });
 
-    // 儲存不限月份固定預算
     saveBudgetBtn.addEventListener("click", async () => {
       const payload = {
+        month: budgetMonthInput.value,
         mainCategory: budgetCategorySelect.value,
         budgetAmount: Number(budgetAmountInput.value || 0)
       };
       const res = await apiRequest("saveBudget", payload);
-      showToast("固定預算設定成功！");
+      showToast("預算設定成功！");
       budgetAmountInput.value = "";
       renderApp(res);
     });
 
-    // 網頁初始載入
     window.addEventListener("DOMContentLoaded", async () => {
       dateInput.value = new Date().toISOString().slice(0, 10);
+      budgetMonthInput.value = new Date().toISOString().slice(0, 7);
       const res = await apiRequest("/api/bootstrap");
       renderApp(res);
     });
