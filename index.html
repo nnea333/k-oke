@@ -130,6 +130,11 @@
 
     button:disabled { cursor: wait; opacity: 0.66; }
     .secondary { background: color-mix(in srgb, var(--ink) 10%, transparent);
+    .secondary_head { 
+     background: color-mix(in srgb, var(--ink) 10%, transparent);
+     color: var(--ink);
+     padding: 2px 10px;
+     min-height: 26px; }            
      color: var(--ink); }
 
     .panel {
@@ -490,7 +495,7 @@
       <article class="panel">
         <div class="row-between">
           <h2>帳戶來源</h2>
-          <button class="secondary" id="accountToggleButton" type="button">新增帳戶</button>
+          <button class="secondary_head" id="accountToggleButton" type="button">新增帳戶</button>
         </div>
         <form class="tool-form hidden" id="accountForm">
           <label>帳戶分類<input id="accountMainCategory" type="text" list="accountGroupOptions" maxlength="40" placeholder="例如：信用卡、現金" required></label>
@@ -508,7 +513,7 @@
       <article class="panel">
         <div class="row-between">
           <h2>分析圖表(實支金額)</h2>
-          <button class="secondary" id="budgetToggleButton" type="button">設定預算</button>
+          <button class="secondary_head" id="budgetToggleButton" type="button">設定預算</button>
         </div>
         <form class="tool-form hidden" id="budgetForm">
           <label>月份<input id="budgetMonth" type="month" required></label>
