@@ -6,7 +6,8 @@
   <title>記帳 APP (獨立後端版)</title>
   <style>
     :root {
-      --ink: #595d6b;        /* 主要文字色、深色標題 */
+      --ink_l:#fc5b31       /* 原橘色 */
+      --ink: #595d6b;        /* 深橘色，主要文字色、深色標題 */
       --muted: #706b69;        /* 輔助文字：帶一點暖調的深灰 */
       --line: #dcd7d1;         /* 邊框格線 */
       --wash: #f2f1ed;         /* 輸入框底色/淺灰白 */
@@ -58,7 +59,7 @@
       width: fit-content;
       border: 0;
       background: transparent;
-      color: var(--ink);
+      color: var(--ink_l);
       box-shadow: none;
       text-align: left;
       padding: 0;
@@ -113,13 +114,13 @@
       flex: 0 0 auto;
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.9);
-      color: var(--ink);
+      color: var(--ink_l);
       white-space: nowrap;
     }
 
     .page-tab.active {
-      border-color: var(--ink);
-      background: var(--ink);
+      border-color: var(--ink_l);
+      background: var(--ink_l);
       color: #fff;
     }
 
